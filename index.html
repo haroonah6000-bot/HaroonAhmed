@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en" data-mode="light" data-accent="ocean">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIEAS — Pakistan Institute of Engineering &amp; Applied Sciences</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--p:#0b4a8f;--p2:#1593c9;--gold:#f2a516;--ok:#16a34a;
+  --bg:#f5f8fd;--bg2:#eaf1fb;--card:#ffffff;--text:#10213d;--muted:#5b6b86;--border:#dbe5f3;--shadow:0 18px 45px rgba(15,50,110,.12);--nav:rgba(255,255,255,.82)}
+[data-accent="emerald"]{--p:#0b6b4f;--p2:#18b98a;--gold:#e8b11c}
+[data-accent="sunset"]{--p:#a2261f;--p2:#f0782b;--gold:#ffd166}
+[data-mode="dark"]{--bg:#0a1222;--bg2:#0f1a30;--card:#121e38;--text:#e9eefb;--muted:#9fb0d0;--border:#22325a;--shadow:0 18px 45px rgba(0,0,0,.45);--nav:rgba(10,18,34,.82)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .4s,color .4s}
+h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.container{width:min(1240px,92%);margin:auto}
+section{padding:96px 0}
+.grad{background:linear-gradient(120deg,var(--p),var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--p2);font-weight:700;margin-bottom:12px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--gold)}
+h2{font-size:clamp(2rem,4vw,3rem);line-height:1.12;margin-bottom:14px}
+.lead{color:var(--muted);max-width:640px}
+#bar{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--gold),var(--p2));z-index:300}
+
+/* top utility + nav */
+.util{background:var(--p);color:#fff;font-size:.8rem;padding:8px 0}
+.util .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.util a{opacity:.9;margin-left:16px}.util a:hover{opacity:1;text-decoration:underline}
+nav{position:sticky;top:0;z-index:200;background:var(--nav);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+nav .container{display:flex;align-items:center;justify-content:space-between;height:78px;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.crest{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 30% 25%,var(--p2),var(--p));display:grid;place-items:center;color:#fff;font-weight:800;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--gold)}
+.brand b{display:block;font-family:'Playfair Display';font-size:1.25rem;line-height:1}.brand small{color:var(--muted);font-size:.68rem;letter-spacing:.05em}
+.menu{display:flex;list-style:none;gap:2px;align-items:center}
+.menu a{display:block;padding:9px 13px;border-radius:10px;font-size:.9rem;font-weight:500;position:relative}
+.menu a::after{content:"";position:absolute;left:13px;right:13px;bottom:4px;height:2px;background:var(--gold);transform:scaleX(0);transition:.3s}
+.menu a:hover::after{transform:scaleX(1)}.menu a:hover{color:var(--p)}
+[data-mode="dark"] .menu a:hover{color:var(--p2)}
+.tools{display:flex;gap:8px;align-items:center}
+.ib{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:1rem}
+.sw{display:flex;gap:6px;padding:0 6px}.sw i{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid var(--card);box-shadow:0 0 0 1px var(--border);transition:.2s}
+.sw i:hover{transform:scale(1.25)}
+.btn{display:inline-flex;gap:8px;align-items:center;padding:13px 26px;border-radius:12px;font-weight:600;border:0;cursor:pointer;font-family:inherit;font-size:.95rem;transition:.3s}
+.btn-p{background:linear-gradient(120deg,var(--p),var(--p2));color:#fff;box-shadow:0 12px 28px color-mix(in srgb,var(--p) 40%,transparent)}
+.btn-p:hover{transform:translateY(-3px)}
+.btn-g{background:var(--card);border:1px solid var(--border);color:var(--text)}.btn-g:hover{border-color:var(--p2);transform:translateY(-3px)}
+.burger{display:none}
+@media(max-width:1020px){.menu{position:fixed;top:118px;left:0;right:0;flex-direction:column;background:var(--bg);padding:18px;border-bottom:1px solid var(--border);transform:translateY(-140%);transition:.4s;z-index:-1}.menu.open{transform:none}.burger{display:inline-block}.sw{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:calc(100vh - 118px);display:flex;align-items:center;overflow:hidden;color:#fff;background:#0a2a52}
+.scene,.slides{position:absolute;inset:0}.scene svg{width:100%;height:100%}
+.slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity 1.6s ease}
+.slides img.on{opacity:1;animation:kb 12s ease-out forwards}
+@keyframes kb{to{transform:scale(1.18) translate(-1.5%,-1%)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,24,54,.92) 0%,rgba(6,24,54,.62) 50%,rgba(6,24,54,.2) 100%)}
+.hero .container{position:relative;z-index:3;padding:70px 0}
+.hero h1{font-size:clamp(2.6rem,6.2vw,5.2rem);line-height:1.03;max-width:800px;margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{max-width:580px;font-size:1.12rem;opacity:.92;margin-bottom:32px}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:7px 16px;border-radius:99px;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);font-size:.82rem;margin-bottom:22px}
+.chip i{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:bl 1.4s infinite}@keyframes bl{50%{opacity:.25}}
+.hero .btn-g{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.35);backdrop-filter:blur(6px)}
+.dots{position:absolute;z-index:4;right:5%;bottom:34px;display:flex;gap:8px}.dots b{width:30px;height:4px;border-radius:4px;background:rgba(255,255,255,.35);cursor:pointer;transition:.3s}.dots b.on{background:var(--gold);width:54px}
+.float{position:absolute;z-index:3;right:6%;top:22%;display:grid;gap:14px}
+.fc{background:rgba(255,255,255,.95);color:#10213d;border-radius:16px;padding:14px 20px;box-shadow:0 20px 40px rgba(0,0,0,.3);animation:fl 5s ease-in-out infinite;min-width:200px}
+.fc:nth-child(2){animation-delay:-2s;margin-left:40px}.fc b{font-family:'Playfair Display';font-size:1.8rem;color:var(--p);display:block;line-height:1.1}
+@keyframes fl{50%{transform:translateY(-12px)}}
+@media(max-width:900px){.float{display:none}}
+
+/* scene animation */
+.cloud{animation:drift linear infinite}@keyframes drift{from{transform:translateX(-300px)}to{transform:translateX(1900px)}}
+.bird{animation:fly linear infinite}@keyframes fly{from{transform:translateX(-100px)}to{transform:translateX(1800px)}}
+.tree{transform-box:fill-box;transform-origin:bottom center;animation:sway 4s ease-in-out infinite}@keyframes sway{50%{transform:rotate(2.2deg)}}
+.win{animation:tw 6s infinite}@keyframes tw{0%,60%{opacity:.35}70%,100%{opacity:1}}
+
+/* ticker */
+.ticker{background:var(--p);color:#fff;overflow:hidden;padding:13px 0}
+.tk{display:flex;gap:70px;width:max-content;animation:sc 38s linear infinite;font-size:.92rem;white-space:nowrap}.tk span::before{content:"◆";color:var(--gold);margin-right:14px}
+@keyframes sc{to{transform:translateX(-50%)}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:-56px;position:relative;z-index:5}
+.stat{background:var(--card);border-radius:20px;padding:28px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border);border-bottom:4px solid var(--gold)}
+.stat b{font-family:'Playfair Display';font-size:2.6rem;color:var(--p);display:block}[data-mode="dark"] .stat b{color:var(--p2)}
+.stat small{color:var(--muted)}
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}}
+
+/* top stories */
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{padding:9px 20px;border-radius:99px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-weight:600;font-family:inherit;transition:.25s}
+.tabs button.on,.tabs button:hover{background:var(--p);color:#fff;border-color:var(--p)}
+.stories{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-auto-rows:260px;gap:20px}
+.story{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:var(--shadow);display:block;transition:opacity .4s,transform .4s}
+.story.big{grid-row:span 2}
+.story img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.story:hover img{transform:scale(1.1)}
+.story::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(5,15,35,.9))}
+.story .t{position:absolute;z-index:2;left:20px;right:20px;bottom:18px;color:#fff}
+.story .tag{display:inline-block;background:var(--gold);color:#222;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:6px;margin-bottom:8px;letter-spacing:.06em}
+.story h3{font-family:Inter;font-size:1.02rem;line-height:1.3}.story.big h3{font-family:'Playfair Display';font-size:1.8rem}
+.story small{opacity:.8;font-size:.78rem;display:block;margin-top:6px}
+.story.hide{opacity:0;transform:scale(.9);pointer-events:none;position:absolute;visibility:hidden}
+@media(max-width:1000px){.stories{grid-template-columns:1fr 1fr}.story.big{grid-column:span 2;grid-row:span 1}}@media(max-width:600px){.stories{grid-template-columns:1fr}.story.big{grid-column:auto}}
+
+/* about */
+.bg2{background:var(--bg2)}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.collage{position:relative;height:480px}
+.collage .a,.collage .b{position:absolute;border-radius:22px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(135deg,var(--p),var(--p2))}
+.collage .a{inset:0 22% 18% 0}.collage .b{inset:36% 0 0 34%;border:8px solid var(--bg2);animation:fl 6s ease-in-out infinite}
+.collage img{width:100%;height:100%;object-fit:cover}
+.collage .badge{position:absolute;z-index:3;left:-14px;bottom:60px;background:var(--gold);color:#241a00;border-radius:16px;padding:14px 20px;font-weight:700;box-shadow:var(--shadow);animation:fl 5s ease-in-out infinite}
+.badge b{font-size:1.8rem;display:block;line-height:1;font-family:'Playfair Display'}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}.pill{padding:8px 16px;border-radius:99px;background:var(--card);border:1px solid var(--border);font-size:.85rem;transition:.25s}.pill:hover{background:var(--p);color:#fff}
+@media(max-width:900px){.about{grid-template-columns:1fr}.collage{height:360px}}
+
+/* departments */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:30px;transition:transform .25s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden}
+.card:hover{box-shadow:var(--shadow);border-color:var(--p2)}
+.card::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:linear-gradient(90deg,var(--gold),var(--p2));transition:.5s}.card:hover::after{width:100%}
+.ico{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--p),var(--p2));display:grid;place-items:center;font-size:1.6rem;margin-bottom:18px;transition:.4s}.card:hover .ico{transform:rotate(-8deg) scale(1.1)}
+.card h3{font-family:Inter;font-size:1.15rem;margin-bottom:8px}.card p{color:var(--muted);font-size:.93rem}
+@media(max-width:900px){.g3{grid-template-columns:1fr 1fr}}@media(max-width:600px){.g3{grid-template-columns:1fr}}
+
+/* faculty */
+.fac{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:40px}
+.person{background:var(--card);border-radius:24px;overflow:hidden;border:1px solid var(--border);text-align:center;transition:.35s}
+.person:hover{transform:translateY(-10px);box-shadow:var(--shadow)}
+.ph{height:230px;display:grid;place-items:end center;background:linear-gradient(160deg,var(--p),var(--p2));position:relative;overflow:hidden}
+.ph::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.12);top:-90px;right:-80px;transition:.6s}.person:hover .ph::before{transform:scale(1.4)}
+.ph svg{width:78%;position:relative;transition:.5s}.person:hover .ph svg{transform:scale(1.06)}
+.pi{padding:20px}.pi h4{font-family:'Playfair Display';font-size:1.15rem}.pi p{color:var(--muted);font-size:.85rem}
+.soc{display:flex;justify-content:center;gap:8px;margin-top:12px}.soc span{width:30px;height:30px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-size:.8rem}
+@media(max-width:1000px){.fac{grid-template-columns:1fr 1fr}}@media(max-width:560px){.fac{grid-template-columns:1fr}}
+
+/* campus scene section */
+.campus{position:relative;border-radius:32px;overflow:hidden;box-shadow:var(--shadow);height:520px;margin-top:40px;background:#0a2a52}
+.campus svg{width:100%;height:100%}
+.campus .cap{position:absolute;left:30px;bottom:26px;color:#fff;z-index:2;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.campus .cap h3{font-size:2rem}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+.gal div{aspect-ratio:4/3;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,var(--p),var(--p2));position:relative}
+.gal img{width:100%;height:100%;object-fit:cover;transition:.6s}.gal div:hover img{transform:scale(1.12)}
+.gal span{position:absolute;left:12px;bottom:10px;color:#fff;font-weight:700;font-size:.85rem;text-shadow:0 1px 8px #000;z-index:2}
+.gal div::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.6))}
+@media(max-width:800px){.gal{grid-template-columns:1fr 1fr}}
+
+/* events */
+.ev{display:flex;gap:18px;padding:18px;border-radius:18px;background:var(--card);border:1px solid var(--border);margin-bottom:14px;transition:.3s}.ev:hover{transform:translateX(8px);border-color:var(--p2)}
+.dt{min-width:68px;height:68px;border-radius:16px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;display:grid;place-content:center;text-align:center;line-height:1.1}.dt b{font-size:1.5rem;font-family:'Playfair Display'}.dt small{font-size:.68rem;text-transform:uppercase}
+.ev h4{font-size:1rem}.ev p{color:var(--muted);font-size:.85rem}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:20px}.rk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
+.rk div{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;text-align:center}.rk b{font-family:'Playfair Display';font-size:2.2rem;display:block;color:var(--p)}[data-mode="dark"] .rk b{color:var(--p2)}.rk small{font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+
+/* campuses & links */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+.camp{border-radius:20px;overflow:hidden;background:var(--card);border:1px solid var(--border);transition:.35s}.camp:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+.camp .im{height:140px;background:linear-gradient(135deg,var(--p),var(--p2));overflow:hidden}.camp img{width:100%;height:100%;object-fit:cover;transition:.6s}.camp:hover img{transform:scale(1.1)}
+.camp div.b{padding:18px}.camp em{font-style:normal;background:var(--gold);color:#222;font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:6px}.camp h4{font-size:.95rem;margin:8px 0 4px}.camp p{font-size:.8rem;color:var(--muted)}
+@media(max-width:1000px){.g4{grid-template-columns:1fr 1fr}}@media(max-width:560px){.g4{grid-template-columns:1fr}}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.links a{padding:11px 20px;border-radius:12px;background:var(--card);border:1px solid var(--border);font-size:.9rem;transition:.3s}.links a:hover{background:var(--p);color:#fff;transform:translateY(-3px)}
+
+.cta{border-radius:32px;padding:80px 30px;text-align:center;color:#fff;background:linear-gradient(120deg,var(--p),var(--p2));position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.cta p{max-width:560px;margin:0 auto 26px;opacity:.92}.cta .btn{background:#fff;color:var(--p)}
+.cta::before,.cta::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12);animation:fl 7s ease-in-out infinite}.cta::before{width:300px;height:300px;left:-90px;top:-90px}.cta::after{width:220px;height:220px;right:-60px;bottom:-70px;animation-delay:-3s}
+.cta>*{position:relative}
+footer{background:#0a1a33;color:#aab8d4;padding:70px 0 26px;font-size:.9rem}
+.fg{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}footer h4{color:#fff;margin-bottom:14px}footer li{list-style:none;margin-bottom:8px}footer a:hover{color:var(--gold)}
+.cp{margin-top:36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:.8rem}
+@media(max-width:800px){.fg{grid-template-columns:1fr}}
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s,transform .9s}.rv.in{opacity:1;transform:none}.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+#up{position:fixed;right:20px;bottom:20px;z-index:150;opacity:0;pointer-events:none;transition:.3s;background:var(--p);color:#fff;border:0}#up.show{opacity:1;pointer-events:auto}
+.note{position:fixed;left:12px;bottom:12px;z-index:150;font-size:.72rem;padding:6px 12px;border-radius:99px;background:var(--card);border:1px solid var(--border);color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+.hero{background:radial-gradient(1200px 600px at 20% 10%,#14509a,#071a36)}
+.ph{height:280px;place-items:center}.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;z-index:1}
+.ph .mono{font-family:'Playfair Display';font-size:4rem;color:rgba(255,255,255,.85);position:relative}
+.ph::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(6,24,54,.35),transparent 45%)}
+.campus .drone{position:absolute;inset:-6%;will-change:transform;
+ -webkit-mask:radial-gradient(ellipse 78% 74% at 50% 50%,#000 55%,transparent 100%);mask:radial-gradient(ellipse 78% 74% at 50% 50%,#000 55%,transparent 100%)}
+.campus .drone img{width:100%;height:100%;object-fit:cover;filter:saturate(1.15) contrast(1.05)}
+.campus::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(6,24,54,.85),transparent 55%),repeating-linear-gradient(0deg,transparent 0 59px,rgba(255,255,255,.07) 59px 60px),repeating-linear-gradient(90deg,transparent 0 59px,rgba(255,255,255,.07) 59px 60px)}
+.hud{position:absolute;z-index:2;top:22px;left:26px;right:26px;display:flex;align-items:center;gap:10px;color:#fff;font:600 .72rem Inter;letter-spacing:.16em}
+.hud i{width:9px;height:9px;border-radius:50%;background:#ef4444;animation:bl 1.4s infinite}.hud b{margin-left:auto;width:44px;height:44px;border:2px solid var(--gold);border-radius:50%;box-shadow:inset 0 0 0 12px transparent,0 0 0 1px rgba(255,255,255,.3)}
+
+.ph{cursor:pointer}.ph .up{position:absolute;z-index:3;bottom:10px;left:50%;transform:translateX(-50%);font:600 .72rem Inter;background:rgba(255,255,255,.92);color:#10213d;padding:4px 12px;border-radius:99px;font-style:normal}
+.slides img.on{animation:drn 14s ease-in-out forwards}@keyframes drn{from{transform:scale(1.05) translate(1.5%,1%)}to{transform:scale(1.22) translate(-2.5%,-2%)}}
+.cat{position:absolute;z-index:4;left:5%;bottom:34px;font:700 .8rem Inter;letter-spacing:.2em;text-transform:uppercase;color:#fff;padding:9px 18px;border-radius:99px;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);transition:.4s}
+.hero .hud{z-index:4}
+
+.hero>.ticker{position:absolute;top:0;left:0;right:0;z-index:6;background:rgba(6,24,54,.82);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.18)}
+.hero .hud{top:62px!important}
+.float{top:auto!important;bottom:84px;right:6%}
+.hero .container{padding-top:110px}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<div class="util"><div class="container">
+  <span>📍 PIEAS, Lehtrar Road, Islamabad &nbsp;·&nbsp; ☎ +92 (51) 1111 74327 &nbsp;·&nbsp; ✉ registrar@pieas.edu.pk</span>
+  <span><a href="https://www.pieas.edu.pk/career/">Careers</a><a href="https://www.pieas.edu.pk/publicnotices/">Public Notices</a><a href="https://www.pieas.edu.pk/placement-office.cshtml">Placement</a><a href="https://www.pieas.edu.pk/rsd/">Hostels</a></span>
+</div></div>
+
+<nav><div class="container">
+  <a class="brand" href="#home"><span class="crest">P</span><span><b>PIEAS</b><small>PAKISTAN INSTITUTE OF ENGINEERING &amp; APPLIED SCIENCES</small></span></a>
+  <ul class="menu" id="menu">
+    <li><a href="#about">About</a></li><li><a href="#departments">Departments</a></li><li><a href="#admission">Admission</a></li>
+    <li><a href="#stories">Top Stories</a></li><li><a href="#campus">Campus</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="tools">
+    <div class="sw"><i style="background:#0b4a8f" data-a="ocean" title="Ocean"></i><i style="background:#0b6b4f" data-a="emerald" title="Emerald"></i><i style="background:#d9531e" data-a="sunset" title="Sunset"></i></div>
+    <button class="ib" id="mode" aria-label="Dark mode">🌙</button>
+    <button class="ib burger" id="burger">☰</button>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+<div class="ticker"><div class="tk" id="tk"><span>Ranked #1 in Engineering &amp; Technology by HEC (2006, 2012, 2013)</span><span>PEC Ranked #1 (2018)</span><span>QS Ranked #106</span><span>QS 50 Under 50</span><span>CLAD-2026 · Conference on Lasers Applications and Developments</span><span>Convocation 2026</span></div></div>
+
+
+  <div class="slides" id="slides">
+    <img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide2.JPG" alt="" onerror="this.remove()">
+    <img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide16.JPG" alt="" onerror="this.remove()">
+    <img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide30.JPG" alt="" onerror="this.remove()">
+    <img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide21.JPG" alt="" onerror="this.remove()">
+    <img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide25.JPG" alt="" onerror="this.remove()">
+  </div>
+  <div class="container">
+    <div class="chip"><i></i> Convocation 2026 · Admissions open</div>
+    <h1 class="serif">Where <em>science</em> meets<br><span id="typed"></span></h1>
+    <p>A preeminent federal public university in Islamabad — BS, MS, MPhil and PhD programs in engineering, natural sciences and formal sciences.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap"><a class="btn btn-p" href="#admission">Apply for Admission →</a><a class="btn btn-g" href="#stories">Read Top Stories</a></div>
+  </div>
+  <div class="float"><div class="fc"><b>#1</b>HEC Engg &amp; Tech Ranking</div><div class="fc"><b>QS 106</b>World University Rankings</div></div>
+  <div class="hud" style="top:18px;left:5%;right:5%"><i></i><span>DRONE VIEW · LIVE TOUR</span><b></b></div><div class="cat" id="cat"></div><div class="dots" id="dots"></div>
+</header>
+
+
+<div class="container"><div class="stats">
+  <div class="stat rv"><b data-n="1" data-pre="#">0</b><small>HEC Ranking, Engg &amp; Tech</small></div>
+  <div class="stat rv d1"><b data-n="106" data-pre="#">0</b><small>QS Ranking</small></div>
+  <div class="stat rv d2"><b data-n="4">0</b><small>Partner Campuses</small></div>
+  <div class="stat rv d3"><b data-n="28" data-suf="+">0</b><small>Years of Excellence</small></div>
+</div></div>
+
+<!-- TOP STORIES -->
+<section id="stories">
+  <div class="container">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Top Stories</span><h2>What's happening at <span class="grad">PIEAS</span></h2></div>
+      <div class="tabs" id="tabs"><button class="on" data-f="all">All</button><button data-f="news">News</button><button data-f="event">Events</button></div>
+    </div>
+    <div class="stories rv" id="stories-grid">
+      <a class="story big" data-t="news" href="https://www.pieas.edu.pk/proclaim-detail.cshtml?ProclaimId=180"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/_proclaim-images/180/proclaim-1-img.jpg" alt="" onerror="this.remove()"><div class="t"><span class="tag">NEWS</span><h3>Team Arinova Triumphs at Pitch Bazaar 2025 — Entrepreneurship Competition, NUST</h3><small>21 November 2025</small></div></a>
+      <a class="story" data-t="news" href="https://www.pieas.edu.pk/proclaim-detail.cshtml?ProclaimId=167"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/_proclaim-images/167/proclaim-1-img.jpg" alt="" onerror="this.remove()"><div class="t"><span class="tag">NEWS</span><h3>Pakistan Shines at the First International Nuclear Science Olympiad 2024</h3><small>09 August 2024</small></div></a>
+      <a class="story" data-t="news" href="https://www.pieas.edu.pk/proclaim-detail.cshtml?ProclaimId=166"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/_proclaim-images/166/proclaim-1-img.jpg" alt="" onerror="this.remove()"><div class="t"><span class="tag">NEWS</span><h3>3 Bronze Medals &amp; 1 Honorable Mention at IPhO 2024</h3><small>08 August 2024</small></div></a>
+      <a class="story" data-t="event" href="https://www.pieas.edu.pk/proclaim-detail.cshtml?ProclaimId=181"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/_proclaim-images/181/proclaim-1-img.jpg" alt="" onerror="this.remove()"><div class="t"><span class="tag">EVENT</span><h3>Conference on Lasers Applications and Developments (CLAD-2026)</h3><small>10 August 2026</small></div></a>
+      <a class="story" data-t="event" href="https://www.pieas.edu.pk/proclaim-detail.cshtml?ProclaimId=178"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/_proclaim-images/178/proclaim-1-img.jpg" alt="" onerror="this.remove()"><div class="t"><span class="tag">EVENT</span><h3>CERN — A Gateway to Science, Technology and Innovation</h3><small>26 August 2025</small></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="bg2">
+  <div class="container about">
+    <div class="collage rv">
+      <div class="a"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide16.JPG" alt="" onerror="this.remove()"></div>
+      <div class="b"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide30.JPG" alt="" onerror="this.remove()"></div>
+      <div class="badge"><b>1998</b>Excellence since</div>
+    </div>
+    <div class="rv d1">
+      <span class="eyebrow">Welcome to PIEAS</span>
+      <h2>Nestled in a <span class="grad">serene countryside</span>, built for the future</h2>
+      <p class="lead">PIEAS offers BS, MS, MPhil and PhD programs — with postgraduate programs leading the way — plus specialized short courses for engineers, scientists and professionals. Highly qualified faculty and excellent infrastructure serve national and regional needs through education, research and development.</p>
+      <div class="pills"><a class="pill" href="https://www.pieas.edu.pk/about-us.cshtml#menu1">Message from Rector</a><a class="pill" href="https://www.pieas.edu.pk/about-us.cshtml#menu2">Vision &amp; Mission</a><a class="pill" href="https://www.pieas.edu.pk/about-us.cshtml#menu4">Institute Profile</a><a class="pill" href="https://www.pieas.edu.pk/aboutcampuslife.cshtml">Campus Life</a></div>
+      <a class="btn btn-p" href="https://www.pieas.edu.pk/about-us.cshtml">Discover more →</a>
+    </div>
+  </div>
+</section>
+
+<!-- DEPARTMENTS -->
+<section id="departments">
+  <div class="container">
+    <div class="rv"><span class="eyebrow">Academics</span><h2>Departments &amp; <span class="grad">Divisions</span></h2><p class="lead">Explore our core disciplines — see the official site for the full department list.</p></div>
+    <div class="g3">
+      <div class="card tilt rv"><div class="ico">⚛</div><h3>Nuclear &amp; Applied Sciences</h3><p>Nuclear engineering and physics with national and IAEA collaboration.</p></div>
+      <div class="card tilt rv d1"><div class="ico">⚙</div><h3>Engineering</h3><p>Advanced programs with strong labs, projects and industry links.</p></div>
+      <div class="card tilt rv d2"><div class="ico">💻</div><h3>Computing &amp; Formal Sciences</h3><p>Computer science, mathematics and data-driven discovery.</p></div>
+      <div class="card tilt rv"><div class="ico">🧬</div><h3>Life &amp; Biosciences</h3><p>Biology, biotechnology and genetics with NIAB &amp; NIBGE.</p></div>
+      <div class="card tilt rv d1"><div class="ico">🔬</div><h3>Lasers &amp; Optronics</h3><p>Photonics and laser applications with NILOP.</p></div>
+      <div class="card tilt rv d2"><div class="ico">🌍</div><h3>Sustainability</h3><p>Research and action for clean energy and a healthier planet.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAMPUS -->
+<section id="campus">
+  <div class="container">
+    <div class="rv"><span class="eyebrow">Campus Life</span><h2>A campus made for <span class="grad">curiosity</span></h2></div>
+    <div class="campus rv" id="parallax">
+      <div class="drone"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide30.JPG" alt="Aerial view of the PIEAS campus" onerror="this.remove()"></div><div class="hud"><i></i><span>DRONE VIEW · 33.65°N 73.00°E · ALT 120 m</span><b></b></div>
+      <div class="cap"><h3 class="serif">Lehtrar Road, Islamabad</h3><p>Academic blocks · Labs · Hostels · Green spaces</p></div>
+    </div>
+    <div class="gal rv">
+      <div><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide2.JPG" alt="" onerror="this.remove()"><span>Academic Block</span></div>
+      <div><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide21.JPG" alt="" onerror="this.remove()"><span>Laboratories</span></div>
+      <div><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide25.JPG" alt="" onerror="this.remove()"><span>Student Life</span></div>
+      <div><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/slider/Try1/Slide30.JPG" alt="" onerror="this.remove()"><span>Green Campus</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSION + RANK -->
+<section id="admission" class="bg2">
+  <div class="container">
+    <div class="rv"><span class="eyebrow">Admission</span><h2>Start your <span class="grad">journey</span></h2></div>
+    <div class="g3">
+      <a class="card tilt rv" href="http://admissions.pieas.edu.pk/"><div class="ico">📝</div><h3>Apply Online</h3><p>Open the admissions portal and submit your application.</p></a>
+      <a class="card tilt rv d1" href="https://www.pieas.edu.pk/scholarships/"><div class="ico">🎓</div><h3>Scholarships</h3><p>Financial support and merit-based opportunities.</p></a>
+      <a class="card tilt rv d2" href="https://www.pieas.edu.pk/international-students.cshtml"><div class="ico">🌐</div><h3>International Students</h3><p>Guidance for students applying from abroad.</p></a>
+    </div>
+    <div class="split rv">
+      <div><h3 style="margin-bottom:16px">Rankings</h3><div class="rk"><div><b>#1</b><small>HEC 2006</small></div><div><b>#1</b><small>PEC 2018</small></div><div><b>#106</b><small>QS</small></div></div></div>
+      <div><h3 style="margin-bottom:16px">Upcoming events</h3>
+        <a class="ev" href="https://www.pieas.edu.pk/proclaim-detail.cshtml?ProclaimId=181"><div class="dt"><b>10</b><small>Aug 26</small></div><div><h4>CLAD-2026</h4><p>Conference on Lasers Applications and Developments</p></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAMPUSES -->
+<section>
+  <div class="container">
+    <div class="rv"><span class="eyebrow">Network</span><h2>Partner <span class="grad">Campuses</span></h2></div>
+    <div class="g4">
+      <div class="camp rv"><div class="im"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/campuses/img-04.jpg" alt="" onerror="this.remove()"></div><div class="b"><em>KINPOE</em><h4>Karachi Institute of Power Engineering</h4><p>+92 21 99202222 Ext: 2701</p></div></div>
+      <div class="camp rv d1"><div class="im"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/campuses/img-05.jpg" alt="" onerror="this.remove()"></div><div class="b"><em>NILOP</em><h4>National Institute of Lasers &amp; Optronics</h4><p>+92 51 2208052</p></div></div>
+      <div class="camp rv d2"><div class="im"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/campuses/img-06.jpg" alt="" onerror="this.remove()"></div><div class="b"><em>NIAB</em><h4>Nuclear Institute of Agriculture &amp; Biology</h4><p>+92 41 9201751-69</p></div></div>
+      <div class="camp rv d3"><div class="im"><img referrerpolicy="no-referrer" src="https://www.pieas.edu.pk/images/campuses/img-07.jpg" alt="" onerror="this.remove()"></div><div class="b"><em>NIBGE</em><h4>National Institute of Biotechnology &amp; Genetic Engineering</h4><p>+92 41 2651475 Ext: 310</p></div></div>
+    </div>
+    <div class="links rv"><a href="https://www.pieas.edu.pk/admissions/HEC_Approved_Supervisors.pdf">HEC Approved Supervisors</a><a href="https://www.pieas.edu.pk/publication/">Publications</a><a href="http://www.digitallibrary.edu.pk/pieas.html">HEC Digital Library</a><a href="https://www.pieas.edu.pk/student_code_of_conduct.pdf">Code of Conduct</a><a href="http://www.pieas.edu.pk/pieas-iaea/">PIEAS-IAEA CC</a><a href="http://savingearth.pieas.edu.pk/">Saving Earth</a></div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="container"><div class="cta rv"><h2 class="serif">Ready to shape tomorrow?</h2><p>Join a community of researchers, engineers and scientists pushing the boundaries of knowledge.</p><a class="btn" href="http://admissions.pieas.edu.pk/">Start Your Application →</a></div></div>
+</section>
+
+<footer><div class="container">
+  <div class="fg">
+    <div><a class="brand" href="#home" style="color:#fff"><span class="crest">P</span><span><b>PIEAS</b></span></a><p style="margin-top:14px;max-width:340px">Pakistan Institute of Engineering &amp; Applied Sciences — excellence in teaching, research and application.</p><p style="margin-top:10px">PIEAS, Lehtrar Road, Islamabad<br>+92 (51) 1111 74327 · +92 (51) 924 8611-20<br>registrar@pieas.edu.pk</p></div>
+    <div><h4>About</h4><ul><li><a href="https://www.pieas.edu.pk/about-us.cshtml">About Us</a></li><li><a href="https://www.pieas.edu.pk/colloquium.cshtml">Colloquium</a></li><li><a href="https://www.pieas.edu.pk/qec.cshtml">QEC</a></li><li><a href="https://www.pieas.edu.pk/oric.cshtml">ORIC</a></li></ul></div>
+    <div><h4>Students</h4><ul><li><a href="https://www.pieas.edu.pk/aboutcampuslife.cshtml">Campus Life</a></li><li><a href="https://www.pieas.edu.pk/students.cshtml">Societies &amp; Clubs</a></li><li><a href="https://www.pieas.edu.pk/transport/">Transport</a></li><li><a href="https://www.pieas.edu.pk/placement-office.cshtml">Placement Office</a></li></ul></div>
+  </div>
+  <div class="cp"><span>Unofficial redesign concept · Official site: <a href="https://www.pieas.edu.pk" style="color:var(--gold)">pieas.edu.pk</a></span><span>© PIEAS — content belongs to its owners</span></div>
+</div></footer>
+
+<button class="ib" id="up">↑</button>
+<div class="note">Unofficial redesign concept</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+// theme
+$('#mode').onclick=()=>{const r=document.documentElement,d=r.dataset.mode==='dark';r.dataset.mode=d?'light':'dark';$('#mode').textContent=d?'🌙':'☀️'};
+$$('.sw i').forEach(i=>i.onclick=()=>document.documentElement.dataset.accent=i.dataset.a);
+$('#burger').onclick=()=>$('#menu').classList.toggle('open');$$('#menu a').forEach(a=>a.onclick=()=>$('#menu').classList.remove('open'));
+// typed
+const W=['Engineering.','Innovation.','Discovery.','the Future.'];let wi=0,ci=0,del=false;
+(function t(){const w=W[wi];$('#typed').textContent=w.slice(0,ci);if(!del&&ci++===w.length){del=true;return setTimeout(t,1500)}if(del&&--ci<0){del=false;ci=0;wi=(wi+1)%W.length}setTimeout(t,del?45:95)})();
+// hero slideshow (real photos fade over the animated illustrated campus)
+const sl=$$('#slides img'),dots=$('#dots');let si=0;
+function show(i){sl.forEach((s,k)=>s.classList.toggle('on',k===i));[...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i))}
+function build(){const cur=$$('#slides img');dots.innerHTML='';cur.forEach((_,k)=>{const b=document.createElement('b');b.onclick=()=>{si=k;sh()};dots.appendChild(b)})}
+const CAT=['Classrooms','University · Drone View','Achievements','Departments','Presentations'];
+function sh(){$('#cat').textContent=CAT[si%CAT.length];const cur=$$('#slides img');if(!cur.length)return;cur.forEach((s,k)=>s.classList.toggle('on',k===si));[...dots.children].forEach((d,k)=>d.classList.toggle('on',k===si))}
+setTimeout(()=>{build();sh();setInterval(()=>{const n=$$('#slides img').length;if(n){si=(si+1)%n;sh()}},6000)},1200);
+// ticker
+$('#tk').innerHTML+=$('#tk').innerHTML;
+// reveal + counters
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');
+ const b=e.target.querySelector('[data-n]');if(b&&!b.d){b.d=1;const n=+b.dataset.n,p=b.dataset.pre||'',s=b.dataset.suf||'';let t0;const f=t=>{t0??=t;const k=Math.min((t-t0)/1400,1);b.textContent=p+Math.round(n*(1-Math.pow(1-k,3)))+s;k<1&&requestAnimationFrame(f)};requestAnimationFrame(f)}
+ io.unobserve(e.target)}),{threshold:.12});
+$$('.rv').forEach(e=>io.observe(e));
+// scroll bits
+addEventListener('scroll',()=>{const h=document.documentElement;$('#bar').style.width=h.scrollTop/(h.scrollHeight-h.clientHeight)*100+'%';$('#up').classList.toggle('show',h.scrollTop>600)});
+$('#up').onclick=()=>scrollTo({top:0});
+// story filter
+$$('#tabs button').forEach(b=>b.onclick=()=>{$$('#tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+ $$('.story').forEach(s=>s.classList.toggle('hide',b.dataset.f!=='all'&&s.dataset.t!==b.dataset.f));
+ const vis=$$('.story:not(.hide)');$$('.story').forEach(s=>s.classList.remove('big'));if(vis[0])vis[0].classList.add('big')});
+// tilt
+$$('.tilt').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;c.style.transform=`perspective(800px) rotateX(${(y/r.height-.5)*-7}deg) rotateY(${(x/r.width-.5)*7}deg) translateY(-6px)`});c.addEventListener('mouseleave',()=>c.style.transform='')});
+// campus parallax scene: clone hero svg
+const cs=$('#parallax .drone');
+addEventListener('scroll',()=>{const r=$('#parallax').getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0){const p=(innerHeight-r.top)/(innerHeight+r.height);cs.style.transform=`scale(${1.18+p*.08}) translateY(${(p-.5)*-50}px)`}});
+</script>
+</body>
+</html>
